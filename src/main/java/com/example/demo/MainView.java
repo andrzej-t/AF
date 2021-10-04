@@ -19,20 +19,14 @@ public class MainView extends VerticalLayout {
     public MainView() {
         TextField textField = new TextField("Your name");
 
-        // Button click listeners can be defined as lambda expressions
         GreetService greetService = new GreetService();
         Button button = new Button("Say hello",
                 e -> Notification.show(greetService.greet(textField.getValue())));
 
-        // Theme variants give you predefined extra styles for components.
-        // Example: Primary button is more prominent look.
         button.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
-        // You can specify keyboard shortcuts for buttons.
-        // Example: Pressing enter in this view clicks the Button.
         button.addClickShortcut(Key.ENTER);
 
-        // Use custom CSS classes to apply styling. This is defined in shared-styles.css.
         addClassName("centered-content");
 
         add(textField, button);
