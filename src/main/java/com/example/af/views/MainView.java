@@ -2,7 +2,6 @@ package com.example.af.views;
 
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.html.NativeButton;
@@ -27,17 +26,15 @@ import com.example.af.client.BackendClient;
 import com.example.af.domain.Activity;
 import com.example.af.domain.StatisticsDto;
 import lombok.Getter;
+
 import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Route("")
 @Getter
-
-
-@PWA(name = "Project Base for Vaadin", shortName = "Project Base")
-@CssImport("./styles/shared-styles.css")
-@CssImport(value = "./styles/vaadin-text-field-styles.css", themeFor = "vaadin-text-field")
+@SuppressWarnings("SpringJavaAutowiredMembersInspection")
+@PWA(name = "Activities Finder", shortName = "AF")
 public class MainView extends VerticalLayout {
 
     BackendClient backendClient;
@@ -61,7 +58,7 @@ public class MainView extends VerticalLayout {
         }
     });
 
-    Grid<Activity> grid = new Grid(Activity.class);
+    Grid<Activity> grid = new Grid<>(Activity.class);
 
     H4 header = new H4("ACTIVITY FINDER wyszukiwarka zajęć i zabaw dla najmłodszych i nie tylko");
 
@@ -443,7 +440,7 @@ public class MainView extends VerticalLayout {
                 .withEventHandler("handleClick", activity -> grid.getDataProvider().refreshItem(activity)));
 
         grid.setDetailsVisibleOnClick(false);
-        grid.addColumn(new NativeButtonRenderer("OPIS", item -> grid.setDetailsVisible((Activity) item, !grid.isDetailsVisible((Activity) item))));
+        grid.addColumn(new NativeButtonRenderer<>("OPIS", item -> grid.setDetailsVisible(item, !grid.isDetailsVisible(item))));
 
         placeholderSelect.setItems("Białystok", "Bielsko Biała", "Chojnice", "Częstochowa", "Elbląg", "Gdańsk", "Gorzów", "Hel", "Jelenia Góra", "Kalisz", "Kasprowy Wierch", "Katowice", "Kętrzyn", "Kielce", "Kłodzko", "Koło", "Kołobrzeg", "Koszalin", "Kozienice", "Kraków", "Krosno", "Legnica", "Lesko", "Leszno", "Lębork", "Lublin", "Łeba", "Łódź",
                 "Mikołajki", "Mława", "Nowy Sącz", "Olsztyn", "Opole", "Ostrołęka", "Piła", "Płock", "Poznań", "Przemyśl", "Racibórz", "Resko", "Rzeszów", "Sandomierz", "Siedlce", "Słubice", "Sulejów", "Suwałki", "Szczecin", "Szczecinek", "Śnieżka", "Świnoujście", "Tarnów", "Terespol", "Toruń", "Ustka", "Warszawa", "Wieluń", "Włodawa", "Wrocław", "Zakopane", "Zamość", "Zielona Góra");
