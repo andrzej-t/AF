@@ -484,6 +484,9 @@ public class MainView extends VerticalLayout {
         grid.setItems(Stream.empty());
     }
     private void updateList() {
-        grid.setItems(backendClient.getAllActivities().stream().filter(activity -> activity.getName().contains(filterText.getValue())).collect(Collectors.toList()));
+        grid.setItems(backendClient.getAllActivities().stream()
+                .filter(activity -> activity.getName().toLowerCase().contains(filterText.getValue().toUpperCase().toLowerCase()))
+                .filter(activity -> activity.getName().toUpperCase().contains(filterText.getValue().toLowerCase().toUpperCase()))
+                .collect(Collectors.toList()));
     }
 }
