@@ -50,7 +50,7 @@ public class MainView extends VerticalLayout {
         backendClient.updateStatistics(statisticsDto);
         Notification.show("Dzięki za lajka! Liczba polubień: " + backendClient.getLikes(), 1500, Notification.Position.MIDDLE);
         try {
-            for (int i = 0; i < 400000; i++) {
+            for (int i = 0; i < 450000; i++) {
                 System.out.println(i);
             }
         } finally {
@@ -78,6 +78,7 @@ public class MainView extends VerticalLayout {
     Span content2 = new Span();
     Notification notification2 = new Notification(content2, buttonInside2);
     Button boredBtn = new Button("ACTIVITY IN ENGLISH", event -> {
+        backendClient.updateFilters();
         getButtonInside2().getElement().getStyle().set("margin", "20% 30% 10% 38%");
         content2.setText(backendClient.readBored().getActivity() + "\n");
         grid.setItems(Stream.empty());
@@ -102,6 +103,7 @@ public class MainView extends VerticalLayout {
     });
 
     Button infoBtn = new Button("INFO", event -> {
+        backendClient.updateFilters();
         getButtonInside().getElement().getStyle().set("margin", "20% 30% 10% 38%");
         grid.setItems(Stream.empty());
         notification.setOpened(true);
@@ -125,6 +127,7 @@ public class MainView extends VerticalLayout {
     });
 
     Button allBtn = new Button("WSZYSTKIE", event -> {
+        backendClient.updateFilters();
         grid.setItems(backendClient.getAllActivities());
         getWhatKindRadioBtn().setReadOnly(false);
         getWhatKindRadioBtn().setValue("");
@@ -138,6 +141,7 @@ public class MainView extends VerticalLayout {
     });
 
     Button newestBtn = new Button("NAJNOWSZE", event -> {
+        backendClient.updateFilters();
         grid.setItems(backendClient.getNewestActivities());
         getWhatKindRadioBtn().setReadOnly(false);
         getWhatKindRadioBtn().setValue("");
@@ -151,6 +155,7 @@ public class MainView extends VerticalLayout {
     });
 
     Button lotteryBtn = new Button("WYLOSUJ", event -> {
+        backendClient.updateFilters();
         grid.setItems(backendClient.getRandomActivity());
         getWhatKindRadioBtn().setReadOnly(false);
         getWhatKindRadioBtn().setValue("");
@@ -163,7 +168,8 @@ public class MainView extends VerticalLayout {
         getChngFiltersBtn().setEnabled(false);
     });
 
-    Button chngFiltersBtn = new Button("ZMIEŃ FILTR", event -> {
+    Button chngFiltersBtn = new Button("USUŃ FILTRY", event -> {
+        backendClient.updateFilters();
         grid.setItems(Stream.empty());
         getWhereRadioBtn().setReadOnly(false);
         getWhereRadioBtn().setValue("");
@@ -289,27 +295,18 @@ public class MainView extends VerticalLayout {
 
             if (event.getValue().equals("1")) {
                 grid.setItems(backendClient.getOneActivities());
-                whatKindRadioBtn.setReadOnly(true);
-                whereRadioBtn.setReadOnly(true);
-                seasonRadioBtn.setReadOnly(true);
                 chngFiltersBtn.setEnabled(true);
                 statisticsDto.setOneStat(1L);
                 backendClient.updateStatistics(statisticsDto);
             }
             if (event.getValue().equals("2")) {
                 grid.setItems(backendClient.getTwoActivities());
-                whatKindRadioBtn.setReadOnly(true);
-                whereRadioBtn.setReadOnly(true);
-                seasonRadioBtn.setReadOnly(true);
                 chngFiltersBtn.setEnabled(true);
                 statisticsDto.setTwoStat(1L);
                 backendClient.updateStatistics(statisticsDto);
             }
             if (event.getValue().equals("Więcej")) {
                 grid.setItems(backendClient.getMoreActivities());
-                whatKindRadioBtn.setReadOnly(true);
-                whereRadioBtn.setReadOnly(true);
-                seasonRadioBtn.setReadOnly(true);
                 chngFiltersBtn.setEnabled(true);
                 statisticsDto.setMoreStat(1L);
                 backendClient.updateStatistics(statisticsDto);
@@ -324,36 +321,24 @@ public class MainView extends VerticalLayout {
 
             if (event.getValue().equals("Artystyczne")) {
                 grid.setItems(backendClient.getArtActivities());
-                howManyRadioBtn.setReadOnly(true);
-                whereRadioBtn.setReadOnly(true);
-                seasonRadioBtn.setReadOnly(true);
                 chngFiltersBtn.setEnabled(true);
                 statisticsDto.setArtStat(1L);
                 backendClient.updateStatistics(statisticsDto);
             }
             if (event.getValue().equals("Edukacyjne")) {
                 grid.setItems(backendClient.getEducationalActivities());
-                howManyRadioBtn.setReadOnly(true);
-                whereRadioBtn.setReadOnly(true);
-                seasonRadioBtn.setReadOnly(true);
                 chngFiltersBtn.setEnabled(true);
                 statisticsDto.setEduStat(1L);
                 backendClient.updateStatistics(statisticsDto);
             }
             if (event.getValue().equals("Ruchowe")) {
                 grid.setItems(backendClient.getMotionActivities());
-                howManyRadioBtn.setReadOnly(true);
-                whereRadioBtn.setReadOnly(true);
-                seasonRadioBtn.setReadOnly(true);
                 chngFiltersBtn.setEnabled(true);
                 statisticsDto.setMotionStat(1L);
                 backendClient.updateStatistics(statisticsDto);
             }
             if (event.getValue().equals("Do auta")) {
                 grid.setItems(backendClient.getInCarActivities());
-                howManyRadioBtn.setReadOnly(true);
-                whereRadioBtn.setReadOnly(true);
-                seasonRadioBtn.setReadOnly(true);
                 chngFiltersBtn.setEnabled(true);
                 statisticsDto.setCarStat(1L);
                 backendClient.updateStatistics(statisticsDto);
@@ -368,18 +353,12 @@ public class MainView extends VerticalLayout {
 
             if (event.getValue().equals("Lato")) {
                 grid.setItems(backendClient.getSummerActivities());
-                whatKindRadioBtn.setReadOnly(true);
-                howManyRadioBtn.setReadOnly(true);
-                whereRadioBtn.setReadOnly(true);
                 chngFiltersBtn.setEnabled(true);
                 statisticsDto.setSummerStat(1L);
                 backendClient.updateStatistics(statisticsDto);
             }
             if (event.getValue().equals("Zima")) {
                 grid.setItems(backendClient.getWinterActivities());
-                whatKindRadioBtn.setReadOnly(true);
-                howManyRadioBtn.setReadOnly(true);
-                whereRadioBtn.setReadOnly(true);
                 chngFiltersBtn.setEnabled(true);
                 statisticsDto.setWinterStat(1L);
                 backendClient.updateStatistics(statisticsDto);
@@ -393,18 +372,12 @@ public class MainView extends VerticalLayout {
         whereRadioBtn.addValueChangeListener(event -> {
             if (event.getValue().equals("Na zewnątrz")) {
                 grid.setItems(backendClient.getOutdoorActivities());
-                whatKindRadioBtn.setReadOnly(true);
-                howManyRadioBtn.setReadOnly(true);
-                seasonRadioBtn.setReadOnly(true);
                 chngFiltersBtn.setEnabled(true);
                 statisticsDto.setOutdoorStat(1L);
                 backendClient.updateStatistics(statisticsDto);
             }
             if (event.getValue().equals("Wewnątrz")) {
                 grid.setItems(backendClient.getIndoorActivities());
-                whatKindRadioBtn.setReadOnly(true);
-                howManyRadioBtn.setReadOnly(true);
-                seasonRadioBtn.setReadOnly(true);
                 chngFiltersBtn.setEnabled(true);
                 statisticsDto.setIndoorStat(1L);
                 backendClient.updateStatistics(statisticsDto);
@@ -415,6 +388,7 @@ public class MainView extends VerticalLayout {
         filterText.setClearButtonVisible(true);
         filterText.setValueChangeMode(ValueChangeMode.EAGER);
         filterText.addValueChangeListener(e -> {
+            backendClient.updateFilters();
             updateList();
             getWhatKindRadioBtn().setReadOnly(false);
             getWhatKindRadioBtn().setValue("");
@@ -482,7 +456,9 @@ public class MainView extends VerticalLayout {
 
     public void refresh() {
         grid.setItems(Stream.empty());
+        backendClient.updateFilters();
     }
+
     private void updateList() {
         grid.setItems(backendClient.getAllActivities().stream()
                 .filter(activity -> activity.getName().toLowerCase().contains(filterText.getValue().toUpperCase().toLowerCase()))

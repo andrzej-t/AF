@@ -63,6 +63,10 @@ public class BackendClient {
         }
     }
 
+    public void updateFilters() {
+        restTemplate.put(connectionConfig.getBackApiEndpoint() + "/reset", null);
+    }
+
     public List<Activity> getRandomActivity() {
         try {
             Optional<Activity[]> boardsResponse = Optional.ofNullable(restTemplate.getForObject(connectionConfig.getBackApiEndpoint() + "/random", Activity[].class));
